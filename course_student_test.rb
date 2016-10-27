@@ -3,7 +3,7 @@ require 'minitest/autorun'
 require 'minitest/pride'
 
 require './migration'
-require './course'
+require './course_student'
 
 # Overwrite the development database connection with a test connection.
 ActiveRecord::Base.establish_connection(
@@ -18,29 +18,17 @@ ApplicationMigration.migrate(:up)
 
 
 # Finally!  Let's test the thing.
-class CourseTest < Minitest::Test
+class CourseStudentTest < Minitest::Test
 
   def test_truth
     assert true
   end
 
-  def test_can_create_course
-    wizarding_101 = Course.new(name: "Wizarding 101", course_code: "WIZ101")
-    assert_equal "Wizarding 101", wizarding_101.name
-  end
-
-  def test_course_has_a_term
-    wiz_101 = Course.create!(name: "Wizarding 101", course_code: "WIZ101")
-    fall_2015 = Term.create!(name: "Fall 2015")
-    fall_2015.courses << wiz_101
-    assert_equal fall_2015, wiz_101.term
-  end
-
-  def test_course_has_students
-    wiz_101 = Course.create!(name: "Wizarding 101", course_code: "WIZ101")
+  def test_course_student_related_to_course
     merlin = CourseStudent.create!(student_id: 42)
+    wiz_101 = Course.create!(name: "Wizarding 101")
     wiz_101.course_students << merlin
-    assert_equal [merlin], wiz_101.course_students
+    assert_equal wiz_101, merlin.course
   end
 
 end

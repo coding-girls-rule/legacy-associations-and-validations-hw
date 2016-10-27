@@ -1,3 +1,5 @@
+require './course'
+
 class CourseStudent < ActiveRecord::Base
 
   scope :approved, -> { where(approved: true) }
@@ -6,6 +8,8 @@ class CourseStudent < ActiveRecord::Base
   delegate :code_and_name, :color, to: :course, prefix: true
   delegate :full_name, :first_name, :last_name, :email, to: :student
   delegate :grading_method, to: :course
+
+  belongs_to :course
 
   def awarded_achievement_for(achievement)
     if achievement

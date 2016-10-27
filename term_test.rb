@@ -58,9 +58,7 @@ class TermTest < Minitest::Test
     wiz_101 = Course.create!(name: "Wizarding 101")
     fall_2015.courses << wiz_101
     fall_2015.save
-    fall_2015.destroy
-    assert_equal ["Cannot delete record because dependent courses exist"], fall_2015.errors.messages[:base]
-
+    refute fall_2015.destroy
   end
 
 end
