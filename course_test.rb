@@ -28,4 +28,11 @@ class CourseTest < Minitest::Test
     wizarding_101 = Course.new(name: "Wizarding 101", course_code: "WIZ101")
     assert_equal "Wizarding 101", wizarding_101.name
   end
+
+  def test_course_has_a_term
+    wiz_101 = Course.create!(name: "Wizarding 101", course_code: "WIZ101")
+    fall_2015 = Term.create!(name: "Fall 2015")
+    fall_2015.courses << wiz_101
+    assert_equal fall_2015, wiz_101.term
+  end
 end

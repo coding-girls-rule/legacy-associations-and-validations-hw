@@ -1,8 +1,10 @@
 require './school'
+require './course'
 
 class Term < ActiveRecord::Base
 
   belongs_to :school
+  has_many :courses
 
   default_scope { order('ends_on DESC') }
 

@@ -40,4 +40,11 @@ class TermTest < Minitest::Test
     assert_equal wesleyan, fall_2015.school
   end
 
+  def test_term_can_have_courses
+    fall_2015 = Term.new(name: "Fall 2015", starts_on: Date.new(2015, 9, 1), ends_on: Date.new(2015, 12, 15))
+    fall_2015.save
+    wiz_101 = Course.new(name: "Wizarding 101")
+    assert fall_2015.courses << wiz_101
+  end
+
 end
