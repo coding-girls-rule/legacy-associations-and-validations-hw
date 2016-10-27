@@ -1,3 +1,4 @@
+require './term'
 class Course < ActiveRecord::Base
 
   default_scope { order("courses.term_id DESC, courses.course_code, courses.id DESC") }
