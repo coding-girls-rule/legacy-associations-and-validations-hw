@@ -50,4 +50,10 @@ class CourseTest < Minitest::Test
     refute wiz_101.destroy
   end
 
+  def test_course_has_assignments
+    wiz_101 = Course.create!(name: "Wizarding 101", course_code: "WIZ101")
+    sleeping_draught = Assignment.new(name: "Sleeping Draught")
+    assert wiz_101.assignments << sleeping_draught
+  end
+
 end
