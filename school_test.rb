@@ -25,4 +25,10 @@ class SchoolTest < Minitest::Test
     assert true
   end
 
+  def test_create_school
+    wesleyan = School.new(name: "Wesleyan University")
+    wesleyan.save
+    assert_equal "Wesleyan University", wesleyan.name
+  end
+
 end

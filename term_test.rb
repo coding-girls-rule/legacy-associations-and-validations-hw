@@ -4,7 +4,7 @@ require 'minitest/pride'
 
 # Include both the migration and the app itself
 require './migration'
-require './school'
+require './term'
 
 # Overwrite the development database connection with a test connection.
 ActiveRecord::Base.establish_connection(
@@ -23,6 +23,12 @@ class TermTest < Minitest::Test
 
   def test_truth
     assert true
+  end
+
+  def test_create_term
+    fall_2015 = Term.new(name: "Fall 2015", starts_on: "2015-09-01", ends_on: "2015-12-15")
+    fall_2015.save
+    assert_equal "Fall 2015", fall_2015.name
   end
 
 end
