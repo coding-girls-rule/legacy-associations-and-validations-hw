@@ -31,4 +31,11 @@ class SchoolTest < Minitest::Test
     assert_equal "Wesleyan University", wesleyan.name
   end
 
+  def test_add_term_to_school
+    wesleyan = School.new(name: "Wesleyan University")
+    wesleyan.save
+    fall_2015 = Term.new(name: "Fall 2015", starts_on: 1.day.ago, ends_on: Date.today )
+    assert wesleyan.terms << fall_2015
+  end
+
 end

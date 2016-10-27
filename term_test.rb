@@ -26,7 +26,7 @@ class TermTest < Minitest::Test
   end
 
   def test_create_term
-    fall_2015 = Term.new(name: "Fall 2015", starts_on: "2015-09-01", ends_on: "2015-12-15")
+    fall_2015 = Term.new(name: "Fall 2015", starts_on: Date.new(2015, 9, 1), ends_on: Date.new(2015, 12, 15))
     fall_2015.save
     assert_equal "Fall 2015", fall_2015.name
   end
