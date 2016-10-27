@@ -65,4 +65,20 @@ class CourseTest < Minitest::Test
     assert_raises do Lesson.find(lesson12.id) end
   end
 
+  def test_course_has_assignments
+    wiz_101 = Course.create!(name: "Wizarding 101", course_code: "WIZ101")
+    sleeping_draught = Assignment.new(name: "Sleeping Draught")
+    assert wiz_101.assignments << sleeping_draught
+  end
+
+  def test_destroying_course_destroys_assignments
+    wiz_101 = Course.create!(name: "Wizarding 101", course_code: "WIZ101")
+    sleeping_draught = Assignment.new(name: "Sleeping Draught")
+    wiz_101.assignments << sleeping_draught
+    wiz_101.destroy
+    assert_raises do
+      Assignment.find(wiz_101.id)
+    end
+  end
+
 end
