@@ -2,7 +2,7 @@ require './term'
 class Course < ActiveRecord::Base
 
   belongs_to :term
-  has_many :lessons, dependents: :destroy
+  has_many :lessons, dependent: :destroy
 
   default_scope { order("courses.term_id DESC, courses.course_code, courses.id DESC") }
 
