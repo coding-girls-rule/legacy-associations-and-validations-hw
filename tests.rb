@@ -1,6 +1,9 @@
 # Basic test requires
 require 'minitest/autorun'
 require 'minitest/pride'
+require './course'
+require './lesson'
+require './reading'
 
 # Include both the migration and the app itself
 require './migration'
@@ -24,5 +27,7 @@ class ApplicationTest < Minitest::Test
   def test_truth
     assert true
   end
+
+
 
 end
