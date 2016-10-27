@@ -1,6 +1,6 @@
 class Reading < ActiveRecord::Base
 
-  belongs_to :lesson, required: true
+  belongs_to :lesson #, required: true
 
   default_scope { order('order_number') }
 
