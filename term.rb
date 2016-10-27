@@ -1,4 +1,8 @@
+require './school'
+
 class Term < ActiveRecord::Base
+
+  belongs_to :school
 
   default_scope { order('ends_on DESC') }
 
