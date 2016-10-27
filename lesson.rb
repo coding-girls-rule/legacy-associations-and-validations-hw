@@ -1,3 +1,6 @@
+require './course'
+require './reading'
+
 class Lesson < ActiveRecord::Base
   has_many :readings, dependent: :destroy
   belongs_to :course#, required: true

@@ -4,6 +4,7 @@ require 'minitest/pride'
 
 require './migration'
 require './course'
+require './lesson'
 
 # Overwrite the development database connection with a test connection.
 ActiveRecord::Base.establish_connection(
@@ -48,6 +49,20 @@ class CourseTest < Minitest::Test
     merlin = CourseStudent.create!(student_id: 42)
     wiz_101.course_students << merlin
     refute wiz_101.destroy
+  end
+
+  def test_deleting_a_course_destroys_related_lessons
+    lesson_11 = Lesson.create!(name: "Disappearing Act", description:"How to make things disappear")
+    lesson_12 = Lesson.create!(name: "Setting the stage", description:"We learn how to set the stage for maximum effect")
+    wiz_101 = Course.create!(name: "Wizarding 101", course_code: "WIZ101")
+
+    wiz_101.lessons << lesson_11
+    wiz_101.lessons << lesson_12
+    wiz_101.destroy
+
+    assert_raises do Course.find(wiz_101.id) end
+    assert_raises do Lesson.find(lesson11.id) end
+    assert_raises do Lesson.find(lesson12.id) end
   end
 
 end
