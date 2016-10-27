@@ -43,4 +43,11 @@ class CourseTest < Minitest::Test
     assert_equal [merlin], wiz_101.course_students
   end
 
+  def test_cant_delete_course_with_students
+    wiz_101 = Course.create!(name: "Wizarding 101", course_code: "WIZ101")
+    merlin = CourseStudent.create!(student_id: 42)
+    wiz_101.course_students << merlin
+    refute wiz_101.destroy
+  end
+
 end
