@@ -1,6 +1,7 @@
 # Basic test requires
 require 'minitest/autorun'
 require 'minitest/pride'
+require 'pry'
 
 require './migration'
 require './course'
@@ -43,5 +44,11 @@ class LessonTest < Minitest::Test
     pre_assmt = Assignment.create!(name: "Chapter One")
     lesson_12.pre_class_assignment = pre_assmt
     assert_equal pre_assmt, lesson_12.pre_class_assignment
+  end
+
+  def test_validate_lesson_must_have_name
+    assert_raises do
+      Lesson.create!
+    end
   end
 end
