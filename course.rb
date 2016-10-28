@@ -13,6 +13,7 @@ class Course < ActiveRecord::Base
   has_many :course_students, dependent: :restrict_with_error
   validates_presence_of :course_code, :name
   validates_uniqueness_of :course_code, scope: :term_id, :allow_nil => true
+  validates_format_of :course_code, :with => /\A[a-zA-Z]{3}(\ |\.|\-)?\d{3}\z/
 
   default_scope { order("courses.term_id DESC, courses.course_code, courses.id DESC") }
 

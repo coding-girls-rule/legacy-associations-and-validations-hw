@@ -140,4 +140,10 @@ class CourseTest < Minitest::Test
       wiz_102 = Course.create!(name: "Wizarding 102", course_code: "WIZ101", term: fall_term)
     end
   end
+
+  def test_course_code_has_3_letters_3_numbers
+    assert_raises do
+      wiz_101 = Course.create!(name: "Wizarding 101", course_code: "blahdiddy")
+    end
+  end
 end
