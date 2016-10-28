@@ -1,9 +1,10 @@
 # Basic test requires
 require 'minitest/autorun'
 require 'minitest/pride'
-require './course'
-require './lesson'
-require './reading'
+
+# Include both the migration and the app itself
+require './migration'
+require './term'
 
 # Include both the migration and the app itself
 require './migration'
@@ -20,14 +21,6 @@ ActiveRecord::Base.establish_connection(
 begin ApplicationMigration.migrate(:down); rescue; end
 ApplicationMigration.migrate(:up)
 
-
-# Finally!  Let's test the thing.
-class ApplicationTest < Minitest::Test
-
-  def test_truth
-    assert true
-  end
-
-
-
+Dir["*_test.rb"].each do |file|
+  require_relative file
 end

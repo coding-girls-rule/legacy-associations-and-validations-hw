@@ -5,7 +5,7 @@ ActiveRecord::Base.establish_connection(
   database: 'development.sqlite3'
 )
 
-class ApplicationMigration < ActiveRecord::Migration
+class ApplicationMigration < ActiveRecord::Migration[5.0]
   def change
     create_table "assignment_grades", force: true do |t|
       t.integer  "assignment_id"
