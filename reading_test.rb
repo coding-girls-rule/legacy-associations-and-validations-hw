@@ -50,14 +50,21 @@ class ReadingTest < Minitest::Test
   def test_reading_must_have_order_id
     assert_raises do
       lesson_12 = Lesson.create!(name: "Setting the stage", description:"We learn how to set the stage for maximum effect")
-      lesson_12.readings << Reading.create!(caption: "Creating fog", url: "fogmachine.com")
+      reading = Reading.create!(caption: "Creating fog", url: "fogmachine.com", lesson_id: lesson_12.id)
     end
   end
 
   def test_reading_must_have_url
     assert_raises do
       lesson_12 = Lesson.create!(name: "Setting the stage", description:"We learn how to set the stage for maximum effect")
-      lesson_12.readings << Reading.create!(caption: "Creating fog", order_number: 15)
+      reading = Reading.create!(caption: "Creating fog", order_number: 15, lesson_id: lesson_12.id)
+    end
+  end
+
+  def test_reading_url_must_have_http_https
+    assert_raises do
+      lesson_12 = Lesson.create!(name: "Setting the stage", description:"We learn how to set the stage for maximum effect")
+      reading = Reading.create!(caption: "Creating fog", order_number: 15, url: "this.that.com", lesson_id: lesson_12.id)
     end
   end
 end
