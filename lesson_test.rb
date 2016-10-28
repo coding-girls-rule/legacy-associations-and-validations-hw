@@ -37,4 +37,11 @@ class LessonTest < Minitest::Test
     wiz_101.lessons << lesson_12
     assert_equal wiz_101, lesson_12.course
   end
+
+  def test_lesson_has_pre_class_assignment
+    lesson_12 = Lesson.create!(name: "Setting the stage", description:"We learn how to set the stage for maximum effect")
+    pre_assmt = Assignment.create!(name: "Chapter One")
+    lesson_12.pre_class_assignment = pre_assmt
+    assert_equal pre_assmt, lesson_12.pre_class_assignment
+  end
 end

@@ -3,6 +3,7 @@ require './course'
 class Assignment < ActiveRecord::Base
 
   belongs_to :course
+  has_many :pre_class_assignments, class_name: "Lesson", foreign_key: :pre_class_assignment_id
 
   scope :active_for_students, -> { where("active_at <= ? AND due_at >= ? AND students_can_submit = ?", Time.now, Time.now, true) }
 
