@@ -12,6 +12,7 @@ class Course < ActiveRecord::Base
   has_many :assignments, dependent: :destroy
   has_many :course_students, dependent: :restrict_with_error
   validates_presence_of :course_code, :name
+  validates_uniqueness_of :course_code, scope: :term_id, :allow_nil => true
 
   default_scope { order("courses.term_id DESC, courses.course_code, courses.id DESC") }
 
