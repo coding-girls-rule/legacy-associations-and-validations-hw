@@ -66,14 +66,12 @@ class CourseTest < Minitest::Test
   end
 
   def test_deleting_a_course_destroys_related_lessons_and_their_related_readings
-    reading_12a = Reading.create!(caption: "Creating fog", url: "fogmachine.com", order_number: 12)
-    reading_12b = Reading.create!(caption: "Setting props", url: "props.com", order_number: 12)
+
     lesson_11 = Lesson.create!(name: "Disappearing Act", description:"How to make things disappear")
     lesson_12 = Lesson.create!(name: "Setting the stage", description:"We learn how to set the stage for maximum effect")
+    reading_12a = Reading.create!(caption: "Creating fog", url: "https://fogmachine.com", order_number: 12, lesson_id: lesson_12.id)
+    reading_12b = Reading.create!(caption: "Setting props", url: "http://props.com", order_number: 12, lesson_id: lesson_12.id)
     wiz_101 = Course.create!(name: "Wizarding 101", course_code: "WIZ101")
-
-    lesson_12.readings << reading_12a
-    lesson_12.readings << reading_12b
 
     wiz_101.lessons << lesson_11
     wiz_101.lessons << lesson_12
@@ -109,6 +107,12 @@ class CourseTest < Minitest::Test
     wiz_101.destroy
     assert_raises do
       Assignment.find(wiz_101.id)
+    end
+  end
+
+  def test_course_must_have_code
+    assert_raises do
+      Course.create!(name: "Wizarding 101")
     end
   end
 
