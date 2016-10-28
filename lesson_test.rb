@@ -47,8 +47,8 @@ class LessonTest < Minitest::Test
   end
 
   def test_deleting_a_lesson_destroys_related_readings
-    reading_12a = Reading.create!(caption: "Creating fog", url: "fogmachine.com", order_number: 12)
-    reading_12b = Reading.create!(caption: "Setting props", url: "props.com", order_number: 12)
+    reading_12a = Reading.new(caption: "Creating fog", url: "https://fogmachine.com", order_number: 12)
+    reading_12b = Reading.new(caption: "Setting props", url: "http://props.com", order_number: 12)
     lesson_12 = Lesson.create!(name: "Setting the stage", description:"We learn how to set the stage for maximum effect")
     lesson_12.readings << reading_12a
     lesson_12.readings << reading_12b
