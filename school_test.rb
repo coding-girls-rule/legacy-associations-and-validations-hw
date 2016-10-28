@@ -25,6 +25,7 @@ class SchoolTest < Minitest::Test
   def setup
     Term.delete_all
     School.delete_all
+    Course.delete_all
   end
 
   def test_truth

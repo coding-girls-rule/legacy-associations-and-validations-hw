@@ -113,7 +113,7 @@ class CourseTest < Minitest::Test
 
   def test_destroying_course_destroys_assignments
     wiz_101 = Course.create!(name: "Wizarding 101", course_code: "WIZ101")
-    sleeping_draught = Assignment.new(name: "Sleeping Draught")
+    sleeping_draught = Assignment.new(name: "Sleeping Draught", course_id: 5, percent_of_grade: 0.2)
     wiz_101.assignments << sleeping_draught
     wiz_101.destroy
     assert_raises do

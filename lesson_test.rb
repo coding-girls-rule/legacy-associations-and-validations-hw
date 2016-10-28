@@ -23,6 +23,14 @@ ApplicationMigration.migrate(:up)
 # Finally!  Let's test the thing.
 class LessonTest < Minitest::Test
 
+  def setup
+    Lesson.delete_all
+    Course.delete_all
+    Assignment.delete_all
+    Reading.delete_all
+  end
+
+
   def test_truth
     assert true
   end
