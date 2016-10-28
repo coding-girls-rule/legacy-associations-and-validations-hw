@@ -43,4 +43,18 @@ class SchoolTest < Minitest::Test
     assert wesleyan.terms << fall_2015
   end
 
+  def test_school_has_courses
+    wesleyan = School.create!(name: "Wesleyan University")
+    fall_2015 = Term.new(name: "Fall 2015", starts_on: 1.day.ago, ends_on: Date.today )
+    wesleyan.terms << fall_2015
+    fall_2016 = Term.new(name: "Fall 2016", starts_on: 1.day.ago, ends_on: Date.today )
+    wesleyan.terms << fall_2016
+    wiz_101 = Course.create!(name: "Wizarding 101", course_code: "WIZ101")
+    wiz_201 = Course.create!(name: "Advanced Spellwork", course_code: "WIZ201")
+    fall_2015.courses << wiz_101
+    fall_2016.courses << wiz_201
+    assert_equal wiz_201, wesleyan.courses.first
+    assert_equal wiz_101, wesleyan.courses.last
+  end
+
 end
