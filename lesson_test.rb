@@ -37,4 +37,18 @@ class LessonTest < Minitest::Test
     wiz_101.lessons << lesson_12
     assert_equal wiz_101, lesson_12.course
   end
+
+  def test_deleting_a_lesson_destroys_related_readings
+    reading_12a = Reading.create!(caption: "Creating fog", url: "fogmachine.com", order_number: 12)
+    reading_12b = Reading.create!(caption: "Setting props", url: "props.com", order_number: 12)
+    lesson_12 = Lesson.create!(name: "Setting the stage", description:"We learn how to set the stage for maximum effect")
+    lesson_12.readings << reading_12a
+    lesson_12.readings << reading_12b
+
+    lesson_12.destroy
+
+    assert_raises do Lesson.find(lesson_12.id) end
+    assert_raises do Reading.find(reading_12a.id) end
+    assert_raises do Reading.find(reading_12b.id) end
+  end
 end
