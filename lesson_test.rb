@@ -1,6 +1,7 @@
 # Basic test requires
 require 'minitest/autorun'
 require 'minitest/pride'
+require 'pry'
 
 require './migration'
 require './course'
@@ -44,6 +45,7 @@ class LessonTest < Minitest::Test
     lesson_12.pre_class_assignment = pre_assmt
     assert_equal pre_assmt, lesson_12.pre_class_assignment
   end
+
   def test_deleting_a_lesson_destroys_related_readings
     reading_12a = Reading.create!(caption: "Creating fog", url: "fogmachine.com", order_number: 12)
     reading_12b = Reading.create!(caption: "Setting props", url: "props.com", order_number: 12)
@@ -56,5 +58,11 @@ class LessonTest < Minitest::Test
     assert_raises do Lesson.find(lesson_12.id) end
     assert_raises do Reading.find(reading_12a.id) end
     assert_raises do Reading.find(reading_12b.id) end
+  end
+
+  def test_validate_lesson_must_have_name
+    assert_raises do
+      Lesson.create!
+    end
   end
 end
