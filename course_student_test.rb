@@ -26,7 +26,7 @@ class CourseStudentTest < Minitest::Test
 
   def test_course_student_related_to_course
     merlin = CourseStudent.create!(student_id: 42)
-    wiz_101 = Course.create!(name: "Wizarding 101")
+    wiz_101 = Course.create!(name: "Wizarding 101", course_code: "WIZ101")
     wiz_101.course_students << merlin
     assert_equal wiz_101, merlin.course
   end
