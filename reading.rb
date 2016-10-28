@@ -3,7 +3,8 @@ require './lesson'
 
 class Reading < ActiveRecord::Base
 
-  belongs_to :lesson #, required: true
+  belongs_to :lesson, required: true
+  validates_presence_of :order_number, :url
 
   default_scope { order('order_number') }
 
