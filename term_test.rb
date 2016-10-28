@@ -49,13 +49,13 @@ class TermTest < Minitest::Test
   def test_term_can_have_courses
     fall_2015 = Term.new(name: "Fall 2015", starts_on: Date.new(2015, 9, 1), ends_on: Date.new(2015, 12, 15))
     fall_2015.save
-    wiz_101 = Course.new(name: "Wizarding 101")
+    wiz_101 = Course.new(name: "Wizarding 101", course_code: "WIZ101")
     assert fall_2015.courses << wiz_101
   end
 
   def test_deleting_term_raises_error
     fall_2015 = Term.create!(name: "Fall 2015", starts_on: Date.new(2015, 9, 1), ends_on: Date.new(2015, 12, 15))
-    wiz_101 = Course.create!(name: "Wizarding 101")
+    wiz_101 = Course.create!(name: "Wizarding 101", course_code: "WIZ101")
     fall_2015.courses << wiz_101
     fall_2015.save
     refute fall_2015.destroy
