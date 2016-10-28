@@ -57,4 +57,9 @@ class SchoolTest < Minitest::Test
     assert_equal wiz_101, wesleyan.courses.last
   end
 
+  def test_validate_school_must_have_name
+    assert_raises do
+      School.create!
+    end
+  end
 end

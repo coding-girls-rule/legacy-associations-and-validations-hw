@@ -33,21 +33,57 @@ class TermTest < Minitest::Test
 
   def test_create_term
     fall_2015 = Term.new(name: "Fall 2015", starts_on: Date.new(2015, 9, 1), ends_on: Date.new(2015, 12, 15))
-    fall_2015.save
-    assert_equal "Fall 2015", fall_2015.name
-  end
-
-  def test_term_belongs_to_school
-    fall_2015 = Term.new(name: "Fall 2015", starts_on: Date.new(2015, 9, 1), ends_on: Date.new(2015, 12, 15))
-    fall_2015.save
     wesleyan = School.new(name: "Wesleyan University")
     wesleyan.save
+    fall_2015.school_id = wesleyan.id
+    assert_raises do fall_2015.save end
+  end
+
+  def test_term_name_is_required
+    fall_2015 = Term.new(starts_on: Date.new(2015, 9, 1), ends_on: Date.new(2015, 12, 15))
+    wesleyan = School.new(name: "Wesleyan University")
+    wesleyan.save
+    fall_2015.school_id = wesleyan.id
+    assert_raises do fall_2015.save end
+  end
+
+  def test_term_start_date_is_required
+    fall_2015 = Term.new(name: "Fall 2015", ends_on: Date.new(2015, 12, 15))
+    wesleyan = School.new(name: "Wesleyan University")
+    wesleyan.save
+    fall_2015.school_id = wesleyan.id
+    assert_raises do fall_2015.save end
+  end
+
+  def test_term_end_date_is_required
+    fall_2015 = Term.new(name: "Fall 2015", starts_on: Date.new(2015, 9, 1))
+    wesleyan = School.new(name: "Wesleyan University")
+    wesleyan.save
+    fall_2015.school_id = wesleyan.id
+    assert_raises do fall_2015.save end
+  end
+
+  def test_term_shool_id_is_required
+    fall_2015 = Term.new(name: "Fall 2015", starts_on: Date.new(2015, 9, 1), ends_on: Date.new(2015, 12, 15))
+    wesleyan = School.new(name: "Wesleyan University")
+    wesleyan.save
+    assert_raises do fall_2015.save end
+  end
+  def test_term_belongs_to_school
+    fall_2015 = Term.new(name: "Fall 2015", starts_on: Date.new(2015, 9, 1), ends_on: Date.new(2015, 12, 15))
+    wesleyan = School.new(name: "Wesleyan University")
+    wesleyan.save
+    fall_2015.school_id = wesleyan.id
+    fall_2015.save
     wesleyan.terms << fall_2015
     assert_equal wesleyan, fall_2015.school
   end
 
   def test_term_can_have_courses
     fall_2015 = Term.new(name: "Fall 2015", starts_on: Date.new(2015, 9, 1), ends_on: Date.new(2015, 12, 15))
+    wesleyan = School.new(name: "Wesleyan University")
+    wesleyan.save
+    fall_2015.school_id = wesleyan.id
     fall_2015.save
     wiz_101 = Course.new(name: "Wizarding 101", course_code: "WIZ101")
     assert fall_2015.courses << wiz_101
