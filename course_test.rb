@@ -116,4 +116,10 @@ class CourseTest < Minitest::Test
     end
   end
 
+  def test_course_must_have_code
+    assert_raises do
+      Course.create!(course_code: "WIZ101")
+    end
+  end
+
 end
