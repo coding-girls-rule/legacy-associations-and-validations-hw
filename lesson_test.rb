@@ -15,6 +15,7 @@ ActiveRecord::Base.establish_connection(
 
 # Gotta run migrations before we can run tests.  Down will fail the first time,
 # so we wrap it in a begin/rescue.
+ActiveRecord::Migration.verbose = false
 begin ApplicationMigration.migrate(:down); rescue; end
 ApplicationMigration.migrate(:up)
 
@@ -40,15 +41,16 @@ class LessonTest < Minitest::Test
   end
 
   def test_lesson_has_pre_class_assignment
-    lesson_12 = Lesson.create!(name: "Setting the stage", description:"We learn how to set the stage for maximum effect")
-    pre_assmt = Assignment.create!(name: "Chapter One")
+
+    lesson_12 = Lesson.create!(name: "Setting the stage", description:"We learn how to set the stage for maximum effect", course_id: 1)
+    pre_assmt = Assignment.create!(name: "Chapter One", course_id: 123, percent_of_grade: 0.1 )
     lesson_12.pre_class_assignment = pre_assmt
     assert_equal pre_assmt, lesson_12.pre_class_assignment
   end
 
   def test_lesson_has_in_class_assignment
     lesson_12 = Lesson.create!(name: "Setting the stage", description:"We learn how to set the stage for maximum effect")
-    in_class_assingment1 = Assignment.create!(name: "Chapter One")
+    in_class_assingment1 = Assignment.create!(name: "Chapter One", course_id: 123, percent_of_grade: 0.1 )
     lesson_12.in_class_assignment = in_class_assingment1
     assert_equal in_class_assingment1, lesson_12.in_class_assignment
   end

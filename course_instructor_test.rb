@@ -16,12 +16,18 @@ ActiveRecord::Base.establish_connection(
 
 # Gotta run migrations before we can run tests.  Down will fail the first time,
 # so we wrap it in a begin/rescue.
+ActiveRecord::Migration.verbose = false
 begin ApplicationMigration.migrate(:down); rescue; end
 ApplicationMigration.migrate(:up)
 
 
 # Finally!  Let's test the thing.
 class CourseInstructorTest < Minitest::Test
+
+  def setup
+    CourseInstructor.delete_all
+    Course.delete_all
+  end
 
   def test_truth
     assert true
