@@ -34,7 +34,7 @@ class CourseInstructorTest < Minitest::Test
 
   def test_instructor_belong_to_course
     instructor1 = CourseInstructor.create!(primary: true)
-    wiz_101 = Course.create!(name: "Wizarding 101")
+    wiz_101 = Course.create!(name: "Wizarding 101", course_code: "WIZ101")
     wiz_101.course_instructors << instructor1
     assert_equal  wiz_101, instructor1.course
   end
