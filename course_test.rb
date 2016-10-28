@@ -41,8 +41,9 @@ class CourseTest < Minitest::Test
 
   def test_course_has_a_term
     wiz_101 = Course.create!(name: "Wizarding 101", course_code: "WIZ101")
-    fall_2015 = Term.create!(name: "Fall 2015")
+    fall_2015 = Term.new(name: "Fall 2015", starts_on: Date.new(2001, 1, 1), ends_on: Date.new(2014,1,1))
     fall_2015.courses << wiz_101
+    fall_2015.save
     assert_equal fall_2015, wiz_101.term
   end
 
@@ -105,7 +106,7 @@ class CourseTest < Minitest::Test
 
   def test_course_has_assignments
     wiz_101 = Course.create!(name: "Wizarding 101", course_code: "WIZ101")
-    sleeping_draught = Assignment.new(name: "Sleeping Draught")
+    sleeping_draught = Assignment.new(name: "Sleeping Draught", percent_of_grade: 9)
     assert wiz_101.assignments << sleeping_draught
   end
 
@@ -134,7 +135,7 @@ class CourseTest < Minitest::Test
   def test_course_code_must_be_unique_within_term
     # binding.pry
     wiz_101 = Course.create!(name: "Wizarding 101", course_code: "WIZ101")
-    fall_term = Term.create!(name: "Fall 2015")
+    fall_term = Term.create!(name: "Fall 2015", school_id: 1, starts_on: Date.new(2003, 1, 2), ends_on: Date.new(2015, 1, 5))
     fall_term.courses << wiz_101
     assert_raises do
       wiz_102 = Course.create!(name: "Wizarding 102", course_code: "WIZ101", term: fall_term)
