@@ -31,36 +31,42 @@ class UserTest < Minitest::Test
   end
 
   def test_can_create_a_user
-    user1 = User.create!(first_name: "Adam", last_name: "Smith", email: "adamsmithy@aol.com")
+    user1 = User.create!(first_name: "Adam", last_name: "Smith", email: "adamsmithy@aol.com", photo_url: "http://adams_photos.com")
     assert_equal "adamsmithy@aol.com", user1.email
   end
 
   def test_user_first_name_is_required
-    user1 = User.new(last_name: "Smith", email: "adamsmithy@aol.com")
+    user1 = User.new(last_name: "Smith", email: "adamsmithy@aol.com", photo_url: "http://adams_photos.com")
     refute user1.save
   end
 
   def test_user_last_name_is_required
-    user1 = User.new(first_name: "Adam", email: "adamsmithy@aol.com")
+    user1 = User.new(first_name: "Adam", email: "adamsmithy@aol.com", photo_url: "http://adams_photos.com")
     refute user1.save
   end
 
   def test_user_email_is_required
-    user1 = User.new(first_name: "Adam", last_name: "Smith")
+    user1 = User.new(first_name: "Adam", last_name: "Smith", photo_url: "http://adams_photos.com")
     refute user1.save
   end
 
   def test_email_uniqueness
-    User.create!(first_name: "Adam", last_name: "Smith", email: "adamsmithy@aol.com")
+    User.create!(first_name: "Adam", last_name: "Smith", email: "adamsmithy@aol.com", photo_url: "http://adams_photos.com")
     assert_raises do
-       User.create!(first_name: "Joe", last_name: "White", email: "adamsmithy@aol.com")
+       User.create!(first_name: "Joe", last_name: "White", email: "adamsmithy@aol.com", photo_url: "http://adams_photos.com")
      end
   end
 
   def test_email_has_appropriate_form
     assert_raises do
-       User.create!(first_name: "Joe", last_name: "White", email: "adamsmithy-aol.com")
+       User.create!(first_name: "Joe", last_name: "White", email: "adamsmithy-aol.com", photo_url: "http://joes_photos.com")
      end
+  end
+
+  def test_photo_url_start_with_http_http
+    assert_raises do
+      User.create!(first_name: "Adam", last_name: "Smith", email: "adamsmithy@aol.com", photo_url: "adams_photos.com")
+    end
   end
 
 end

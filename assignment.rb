@@ -6,6 +6,9 @@ class Assignment < ActiveRecord::Base
   has_many :pre_class_assignments, class_name: "Lesson", foreign_key: :pre_class_assignment_id
   has_many :in_class_assignments, class_name: "Lesson", foreign_key: :in_class_assignment_id
   validates :course_id, :name, :percent_of_grade, presence: true
+  #validates_uniqueness_of :course_code, scope: :term_id, :allow_nil => true
+  validates :name, uniqueness: { scope: :course_id,
+    message: "assignment with the same name exist for this course" }
 
   scope :active_for_students, -> { where("active_at <= ? AND due_at >= ? AND students_can_submit = ?", Time.now, Time.now, true) }
 
